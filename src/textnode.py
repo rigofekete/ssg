@@ -8,7 +8,6 @@ class TextType(Enum):
     LINK    = "link"
     IMAGE   = "image"
 
-
 class TextNode:
     def __init__(self, text, text_type, url=None):
         self.text = text
@@ -25,6 +24,7 @@ class TextNode:
     def __repr__(self):
         # using the text_type.value is necessary to print out the value of the Enum, other wise python prints out the actual Enum class name and enumarator name (TextType.LINK)
         return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
+
 
 
 
