@@ -1,5 +1,9 @@
 import unittest
-from markdown_blocks import markdown_to_blocks
+from markdown_blocks import(
+        markdown_to_blocks, 
+        block_to_block_type,
+        BlockType
+     )
 
 
 class TestMarkdownToHTML(unittest.TestCase):
@@ -47,6 +51,64 @@ This is the same paragraph on a new line
                 "- This is a list\n- with items",
             ],
         )
+
+    def test_block_to_block_type(self):
+        md = """
+
+#### This is a level 4 heading
+
+```
+This is a level 4 heading 
+```
+
+> I`m a firestarter, twisted firestarter
+> I`m a firestarter, twisted firestarter
+
+
+- this is a list 
+- with some errands
+- for Nando to execute
+
+
+1. an ordered list
+2. with nothing useful
+3. really
+
+
+
+"""
+
+        filtered_md = markdown_to_blocks(md)
+        block_types = []
+        for block in filtered_md:
+            block_types.append(block_to_block_type(block))
+
+        self.assertEqual(
+                block_types,
+                [
+                    BlockType.HEADING,
+                    BlockType.CODE,
+                    BlockType.QUOTE,
+                    BlockType.ULIST,
+                    BlockType.OLIST,
+                ]
+        )
+
+    def test_block_to_block_types_2(self):
+            block = "# heading"
+            self.assertEqual(block_to_block_type(block), BlockType.HEADING)
+            block = "```\ncode\n```"
+            self.assertEqual(block_to_block_type(block), BlockType.CODE)
+            block = "> quote\n> more quote"
+            self.assertEqual(block_to_block_type(block), BlockType.QUOTE)
+            block = "- list\n- items"
+            self.assertEqual(block_to_block_type(block), BlockType.ULIST)
+            block = "1. list\n2. items"
+            self.assertEqual(block_to_block_type(block), BlockType.OLIST)
+            block = "paragraph"
+            self.assertEqual(block_to_block_type(block), BlockType.PARAGRAPH)
+
+
 
 
 if __name__ == "__main__":
