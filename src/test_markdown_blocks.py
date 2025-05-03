@@ -2,7 +2,8 @@ import unittest
 from markdown_blocks import(
         markdown_to_blocks, 
         block_to_block_type,
-        BlockType
+        BlockType,
+        markdown_to_html_node
      )
 
 
@@ -109,7 +110,22 @@ This is a level 4 heading
             self.assertEqual(block_to_block_type(block), BlockType.PARAGRAPH)
 
 
-
+#     def test_headings(self):
+#         md = """
+#
+#
+# ### this is a header
+#
+#
+# """
+#
+#         node = markdown_to_html_node(md)
+#         html = node.to_html()
+#         self.asserEqual(
+#             html,
+#             "<div><h3> this is a header</h3></div>"
+#         )
+#
 
 if __name__ == "__main__":
     unittest.main()

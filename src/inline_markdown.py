@@ -109,7 +109,7 @@ def extract_markdown_links(text):
 
 
 
-def text_to_textnodes(text):
+def text_to_text_nodes(text):
     nodes = [TextNode(text, TextType.TEXT)]
 
     nodes = split_nodes_images(nodes)

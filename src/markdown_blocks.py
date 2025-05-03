@@ -1,4 +1,7 @@
 from enum import Enum 
+from htmlnode import HTMLNode, ParentNode
+from inline_markdown import text_to_text_nodes
+from textnode import text_node_to_html_node
 import re
 
 class BlockType(Enum):
@@ -70,26 +73,23 @@ def block_to_block_type(block):
         return BlockType.OLIST
     return BlockType.PARAGRAPH
 
-def 
-
 
 def markdown_to_blocks(markdown):
     blocks = markdown.split("\n\n")
     filtered_blocks = []
     for block in blocks:
+        block = block.strip()
         if block == "":
             continue
-        block = block.strip()
         filtered_blocks.append(block)
     return filtered_blocks
-
-
 
 def markdown_to_html_node(markdown):
     children = []
     blocks = markdown_to_blocks(markdown)
     for block in blocks:
         html_node = type_to_html_node(block)
+        # if html_node: 
         children.append(html_node)
     return ParentNode("div", children)
 
@@ -98,48 +98,68 @@ def type_to_html_node(block):
     block_type = block_to_block_type(block)
     match(block_type):
         case BlockType.HEADING:
-            # node = HTMLNode("h1", block)
             return heading_to_html_node(block)
             
+def text_to_children(text):
+    children = []
+    nodes = text_to_text_nodes(text)
+    for node in nodes:
+        print(f"NODE: {node}")
+        children.append(text_node_to_html_node(node))
+    return children
 
 def heading_to_html_node(block):
     level = 0
     for char in block:
         if char == "#":
             level = level + 1
+        else:
+            break
     if level + 1 >= len(block):
-        raise ValueError("")
+        raise ValueError(f"invalid heading format {block}")
+    text = block[level + 1:]
+    children = text_to_children(text)
+    return ParentNode(f"h{level}", children) 
 
 
-
-
-
+#
+#
+# md = """
+#
+# #### This is a level 4 heading
+#
+# ```
+# This is a level 4 heading 
+# ```
+#
+# > I`m a firestarter, twisted firestarter
+# > I`m a firestarter, twisted firestarter
+#
+#
+# - this is a list 
+# - with some errands
+# - for Nando to execute
+#
+#
+# 1. an ordered list
+# 2. with nothing useful
+# 3. really
+#
+#
+# """
+#
 
 md = """
 
-#### This is a level 4 heading
 
-```
-This is a level 4 heading 
-```
-
-> I`m a firestarter, twisted firestarter
-> I`m a firestarter, twisted firestarter
-
-
-- this is a list 
-- with some errands
-- for Nando to execute
-
-
-1. an ordered list
-2. with nothing useful
-3. really
+### this is a header
 
 
 """
 
+node = markdown_to_html_node(md)
+print(node)
+html = node.to_html()
 
-
-
+print(html)
 

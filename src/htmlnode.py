@@ -12,7 +12,7 @@ class HTMLNode:
         if self.props is None:
             return ""
         props_html = "" 
-        # We coould have also formated the key value string this way
+        # We could have also formated the key value string this way
         # for key in self.props:
         #     props_html += f' {key}="{self.props[key]}"'
         # return props_html
