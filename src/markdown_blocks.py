@@ -70,6 +70,8 @@ def block_to_block_type(block):
         return BlockType.OLIST
     return BlockType.PARAGRAPH
 
+def 
+
 
 def markdown_to_blocks(markdown):
     blocks = markdown.split("\n\n")
@@ -80,4 +82,64 @@ def markdown_to_blocks(markdown):
         block = block.strip()
         filtered_blocks.append(block)
     return filtered_blocks
+
+
+
+def markdown_to_html_node(markdown):
+    children = []
+    blocks = markdown_to_blocks(markdown)
+    for block in blocks:
+        html_node = type_to_html_node(block)
+        children.append(html_node)
+    return ParentNode("div", children)
+
+        
+def type_to_html_node(block):
+    block_type = block_to_block_type(block)
+    match(block_type):
+        case BlockType.HEADING:
+            # node = HTMLNode("h1", block)
+            return heading_to_html_node(block)
+            
+
+def heading_to_html_node(block):
+    level = 0
+    for char in block:
+        if char == "#":
+            level = level + 1
+    if level + 1 >= len(block):
+        raise ValueError("")
+
+
+
+
+
+
+md = """
+
+#### This is a level 4 heading
+
+```
+This is a level 4 heading 
+```
+
+> I`m a firestarter, twisted firestarter
+> I`m a firestarter, twisted firestarter
+
+
+- this is a list 
+- with some errands
+- for Nando to execute
+
+
+1. an ordered list
+2. with nothing useful
+3. really
+
+
+"""
+
+
+
+
 
