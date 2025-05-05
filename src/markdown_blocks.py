@@ -123,7 +123,7 @@ def heading_to_html_node(block):
     level = 0
     for char in block:
         if char == "#":
-            level = level + 1
+            level += 1
         else:
             break
     if level + 1 >= len(block):
@@ -134,125 +134,51 @@ def heading_to_html_node(block):
 
 def paragraph_to_html_node(block):
     lines = block.split("\n")
-    text = " ".join(lines)
-    children = text_to_children(text)
+    paragraph = " ".join(lines)
+    children = text_to_children(paragraph)
     return ParentNode("p", children)
 
 def code_to_html_node(block):
-    text = block.strip("```")
-    text = text[1:]
-    code_node = TextNode(text, TextType.CODE, None)
-    html_node = text_node_to_html_node(code_node)
-    return ParentNode("pre", [html_node])
+    # safety check condition (we already confirmed the block type in type_to_html_node
+    if not block.startswith("```") or not block.endswith("```"):
+        raise ValueError(f"Invalid code block format, missign ``` delimiter: {block}")
+    text = block[4:-3]
+    raw_text_node = TextNode(text, TextType.TEXT)
+    child = text_node_to_html_node(raw_text_node)
+    code_node = ParentNode("code", [child])
+    return ParentNode("pre", [code_node])
     
 def quote_to_html_node(block):
-    children = []
-    text = ""
-    quotes = block.split("\n")
-    for quote in quotes:
-        if quote.startswith(">"):
-            text += quote[1:]
-        else:
+    new_lines = []
+    lines = block.split("\n")
+    for line in lines:
+        if not line.startswith(">"):
             raise ValueError("invalid quote format, missing starting '>'")
-    children = text_to_children(text)
+        new_lines.append(line.lstrip(">").strip())
+    content = " ".join(new_lines)
+    children = text_to_children(content)
     return ParentNode("blockquote", children)
 
+
 def ul_to_html_node(block):
-    children = []
-    text = ""
+    html_items = []
     lists = block.split("\n")
     for list in lists:
-        text += f"<ls>{list[2:]}<ls>"
-    children = text_to_children(text)
-    return ParentNode("ul", children)
+        text = list[2:]
+        children = text_to_children(text)
+        html_items.append(ParentNode("li", children))
+    return ParentNode("ul", html_items)
+
 
 def ol_to_html_node(block):
-    children = []
-    text = ""
+    html_items = []
     lists = block.split("\n")
     for list in lists:
-        text += f"<ls>{list[3:]}<ls>"
-    children = text_to_children(text)
-    return ParentNode("ol", children)
+        text = list[3:]
+        children = text_to_children(text)
+        html_items.append(ParentNode("li", children))
+    return ParentNode("ol", html_items)
     
 
 
-
-
-#
-#
-# md = """
-#
-# #### This is a level 4 heading
-#
-# ```
-# This is a level 4 heading 
-# ```
-#
-# > I`m a firestarter, twisted firestarter
-# > I`m a firestarter, twisted firestarter
-#
-#
-# - this is a list 
-# - with some errands
-# - for Nando to execute
-#
-#
-# 1. an ordered list
-# 2. with nothing useful
-# 3. really
-#
-#
-# """
-#
-
-# md = """
-#
-# ```
-# this is a **paragraph** and I do not know what to do
-# I also dont know what to write
-# ```
-# """
-
-md = """
-
-This is **bolded** paragraph
-text in a p
-tag here
-
-This is another paragraph with _italic_ text and `code` here
-
-"""
-
-
-
-# md = """
-#
-# > I am the god of hellfire and I bring you... fire.
-# > quote unquote
-#
-# """
-
-# md = """
-#
-# - eat lunch
-# - drink coffee 
-# - clean the bathroom
-#
-# """
-
-# md = """
-#
-# 1. no coffee
-# 2. no wine
-# 3. maybe something sweet
-# 4. hit the sack
-#
-# """
-
-node = markdown_to_html_node(md)
-# print(f"NODE: {node}")
-html = node.to_html()
-
-print(html)
 
