@@ -1,7 +1,7 @@
 import unittest
 
 from htmlnode import HTMLNode, LeafNode, ParentNode
-from textnode import TextNode, TextType, text_node_to_html_node
+from textnode import TextNode, TextType, text_node_to_html_node 
 
 class TestHtmlNode(unittest.TestCase):
     def test_custom(self):
@@ -38,6 +38,7 @@ class TestHtmlNode(unittest.TestCase):
             node.value,
             "I wish I could read",
         )
+
         self.assertEqual(
             node.children,
             None,

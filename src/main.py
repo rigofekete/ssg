@@ -1,9 +1,19 @@
+import os
+import shutil
+from copystatic import cpy_static_to_public
 from textnode import TextNode, TextType
 
 
+static_path = "../static"
+public_path = "../public"
+
 def main():
-    node = TextNode("This is some anchor text", TextType.LINK, "http://www.boot.dev")
-    print(node)
+    if os.path.exists(public_path):
+        print(f"Removing path: {public_path}")
+        shutil.rmtree(public_path)
+    
+    print("Copying static files to public directory...")
+    cpy_static_to_public(public_path, static_path)
 
 
 if __name__ == "__main__":
