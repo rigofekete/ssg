@@ -181,14 +181,3 @@ def ol_to_html_node(block):
     
 
 
-def extract_title(markdown):
-    blocks = markdown_to_blocks(markdown)
-    for block in blocks:
-        if block[:2] == "# ":
-            header = block.split("\n")[0]
-            title = header[2:].strip()
-            return title
-    return None
-
-
-
