@@ -29,12 +29,11 @@ def main():
     cpy_static_to_public(public_path, static_path)
 
     basepath = ""
-    for arg in sys.argv:
-        if not arg:
-            basepath = "/"
-            break
-        basepath = arg
-        break
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"
+
 
     generate_pages_recursive(from_path, template_path, dest_path, basepath)
 

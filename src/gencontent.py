@@ -47,6 +47,8 @@ def generate_page(from_path, template_path, to_path, basepath):
     template_obj = open(template_path, "r")
     template = template_obj.read()
     template_obj.close()
+    
+    print(f"BASEPATH: {basepath}")
 
     final_html = template.replace("{{ Title }}", title, 1)
     final_html = final_html.replace("{{ Content }}", html_content, 1)
