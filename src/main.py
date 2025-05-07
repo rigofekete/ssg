@@ -2,16 +2,14 @@ import sys
 import os
 import shutil
 from copystatic import cpy_static_to_public
-from textnode import TextNode, TextType
 from gencontent import generate_pages_recursive
 
 # since we are executing the program from the root with the main.sh script we need to set the paths according to the main.sh location (root)
 static_path = "./static"
 public_path = "./docs"
 
-from_path = "./content"
+content_path = "./content"
 template_path = "./template.html"
-dest_path = "./docs"
 
 # static_path = "../static"
 # public_path = "../public"
@@ -35,7 +33,7 @@ def main():
         basepath = "/"
 
 
-    generate_pages_recursive(from_path, template_path, dest_path, basepath)
+    generate_pages_recursive(content_path, template_path, public_path, basepath)
 
 
 if __name__ == "__main__":

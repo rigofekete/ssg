@@ -48,8 +48,6 @@ def generate_page(from_path, template_path, to_path, basepath):
     template = template_obj.read()
     template_obj.close()
     
-    print(f"BASEPATH: {basepath}")
-
     final_html = template.replace("{{ Title }}", title, 1)
     final_html = final_html.replace("{{ Content }}", html_content, 1)
     html_basepath = final_html.replace('href="/', f'href="{basepath}')
