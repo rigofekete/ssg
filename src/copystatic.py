@@ -16,5 +16,3 @@ def cpy_static_to_public(dest, src):
             cpy_static_to_public(new_dest_path, new_src_path)
 
 
-
-# cpy_static_to_public("../public", "../static")

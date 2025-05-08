@@ -12,41 +12,6 @@ class BlockType(Enum):
     ULIST          = "unordered_list"
     OLIST          = "ordered_list"
     
-# MY VERSION, not sure if it handles all of the cases so I am using Lane's function instead 
-# def block_to_block_type(block):
-#     if re.findall(r"(^#{1,6}) .*?", block):
-#         return BlockType.HEADING
-#
-#     if block[:3] == "```" and block[-3:] == "```":
-#         return BlockType.CODE
-#
-#     if block[:1] == ">":
-#         sections = block.split("\n")
-#         for section in sections:
-#           if section[:1] != ">":
-#               return BlockType.PARAGRAPH
-#         return BlockType.QUOTE
-#
-#     if block[:2] == "- ":
-#         sections = block.split("\n")
-#         for section in sections:
-#             if section[:2] != "- ":
-#                 return BlockType.PARAGRAPH
-#         return BlockType.ULIST
-#
-#     if re.findall(r"(^\d. ).*?", block):
-#         sections = block.split("\n")
-#         index = int(sections[0][0])
-#         for section in sections:
-#             if (not re.findall(r"(^\d. ).*?", section)) or (int(section[0]) != index):
-#                 return BlockType.PARAGRAPH
-#             index = int(section[0]) + 1 
-#
-#         return BlockType.OLIST
-#
-#     return BlockType.PARAGRAPH
-
-# LANE's version 
 def block_to_block_type(block):
     lines = block.split("\n")
     # startswith also accepts a tuple with different prefixes to look for (like below), check python documentation 
