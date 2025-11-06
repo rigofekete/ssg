@@ -26,4 +26,23 @@
       - Raw markdown -> ```TextNode``` -> ```HTMLNode```
   - Join all the ```HTMLNode``` blocks under one large parent ```HTMLNode``` for the pages.
   - Use a recursive ```to_html()``` method to convert the ```HTMLNode``` and all its nested nodes to a giant HTML string and inject it in the HTML template.
-  - Write the full HTML string to a file for that page in the ```/docs``` directory.
+- Write the full HTML string to a file for that page in the ```/docs``` directory.
+
+
+## Build Scripts
+
+### main.sh — local development
+
+**Purpose**: fast rebuilds for local preview
+
+**Command**: ```python3 src/main.py``` (uses root / so links work locally)
+
+When to use: while editing ```content/templates``` then serve docs/ locally
+
+### build.sh — production (GitHub Pages)
+
+**Purpose**: generate the site exactly as it will appear at ```https://USERNAME.github.io/REPO_NAME/```
+
+**Command**: ```python3 src/main.py "/REPO_NAME/"``` (prefixes links with the repo base path)
+
+**When to use**: before commit/push to deploy via GitHub Pages
