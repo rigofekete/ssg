@@ -14,7 +14,7 @@
 - The generator converts the Markdown files to a final HTML file for each page and writes them to the /docs directory.
 - Start the built-in Python HTTP server (a separate program, unrelated to the generator) to serve the contents of the ```/docs``` directory on ```http://localhost:8888``` (local machine).
 - Open a browser and navigate to ```http://localhost:8888``` to view the rendered site.
-
+<br><br>
 ## How the SSG Works
 
 - Delete everything in the ```/docs``` directory.
@@ -28,6 +28,7 @@
   - Use a recursive ```to_html()``` method to convert the ```HTMLNode``` and all its nested nodes to a giant HTML string and inject it in the HTML template.
 - Write the full HTML string to a file for that page in the ```/docs``` directory.
 
+<br><br>
 
 ## Build Scripts
 
@@ -38,6 +39,8 @@
 **Command**: ```python3 src/main.py``` (uses root / so links work locally)
 
 When to use: while editing ```content/templates``` then serve docs/ locally
+
+<br>
 
 ### build.sh — production (GitHub Pages)
 
